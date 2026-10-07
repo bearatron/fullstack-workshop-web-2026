@@ -106,24 +106,8 @@ def create_order(request):
     if quantity < 1:
         return JsonResponse({"error": "quantity must be a positive integer"}, status=400)
 
-    # TODO-WORKSHOP-3
-    # menu_item = next((item for item in temporary_menu if item["id"] == menu_item_id), None)
-    # if menu_item is None:
-    #     return JsonResponse({"error": "menu item not found"}, status=400)
-    # blocked = reject_if_unavailable(menu_item)
-    # if blocked is not None:
-    #     return blocked
-    # order = {
-    #     "id": len(temporary_orders) + 1,
-    #     "customer_name": customer_name,
-    #     "menu_item": dict(menu_item),
-    #     "quantity": quantity,
-    #     "status": "pending",
-    # }
-    # temporary_orders.append(order)
-    # return JsonResponse(order, status=201)
-
     # TODO-WORKSHOP-7
+    # Replace the list lookup below with the database:
     # menu_item = MenuItem.objects.filter(id=menu_item_id).first()
     # if menu_item is None:
     #     return JsonResponse({"error": "menu item not found"}, status=400)
@@ -138,10 +122,21 @@ def create_order(request):
     # )
     # return JsonResponse(order_to_json(order), status=201)
 
-    return JsonResponse(
-        {"error": "TODO-WORKSHOP-3 is not finished yet"},
-        status=501,
-    )
+    menu_item = next((item for item in temporary_menu if item["id"] == menu_item_id), None)
+    if menu_item is None:
+        return JsonResponse({"error": "menu item not found"}, status=400)
+    blocked = reject_if_unavailable(menu_item)
+    if blocked is not None:
+        return blocked
+    order = {
+        "id": len(temporary_orders) + 1,
+        "customer_name": customer_name,
+        "menu_item": dict(menu_item),
+        "quantity": quantity,
+        "status": "pending",
+    }
+    temporary_orders.append(order)
+    return JsonResponse(order, status=201)
 
 
 @csrf_exempt
