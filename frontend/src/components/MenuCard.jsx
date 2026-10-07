@@ -2,9 +2,7 @@ import { useState } from "react";
 import { itemDetails } from "../starterMenu";
 
 export default function MenuCard({ item, onAdd }) {
-  // TODO-WORKSHOP-1
-  // const [showDetails, setShowDetails] = useState(false);
-  const showDetails = false;
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <article className="card">
@@ -14,13 +12,7 @@ export default function MenuCard({ item, onAdd }) {
           When item.available === false, show <p className="sold-out">SOLD OUT</p>
           and disable the Add to Order button. */}
       <div className="card-actions">
-        <button
-          type="button"
-          onClick={() => {
-            // TODO-WORKSHOP-1
-            // setShowDetails((current) => !current);
-          }}
-        >
+        <button type="button" onClick={() => setShowDetails((current) => !current)}>
           {showDetails ? "Hide details" : "View details"}
         </button>
         <button type="button" onClick={() => onAdd(item)}>
