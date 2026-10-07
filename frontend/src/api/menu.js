@@ -1,12 +1,10 @@
 export async function fetchMenu() {
-  // TODO-WORKSHOP-4
-  // const response = await fetch("/api/menu/");
-  // if (!response.ok) {
-  //   const data = await response.json().catch(() => ({}));
-  //   throw new Error(data.error || "Could not load the menu");
-  // }
-  // return response.json();
-  throw new Error("TODO-WORKSHOP-4 is not finished yet");
+  const response = await fetch("/api/menu/");
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.error || "Could not load the menu");
+  }
+  return response.json();
 }
 
 export async function updateMenuItem(id, body) {

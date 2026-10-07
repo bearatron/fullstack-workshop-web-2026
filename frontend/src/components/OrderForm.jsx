@@ -13,18 +13,17 @@ export default function OrderForm({ items, selectedId, onSelect, onOrdered }) {
     event.preventDefault();
     setError("");
 
-    // TODO-WORKSHOP-5
-    // try {
-    //   const order = await createOrder({
-    //     customer_name: customerName,
-    //     menu_item_id: Number(selectedId),
-    //     quantity: Number(quantity),
-    //   });
-    //   onOrdered(order);
-    //   setCustomerName("");
-    // } catch (err) {
-    //   setError(err.message);
-    // }
+    try {
+      const order = await createOrder({
+        customer_name: customerName,
+        menu_item_id: Number(selectedId),
+        quantity: Number(quantity),
+      });
+      onOrdered(order);
+      setCustomerName("");
+    } catch (err) {
+      setError(err.message);
+    }
   }
 
   return (

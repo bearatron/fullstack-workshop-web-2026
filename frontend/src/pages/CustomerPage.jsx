@@ -17,23 +17,22 @@ export default function CustomerPage() {
     let ignore = false;
 
     async function loadMenu() {
-      // TODO-WORKSHOP-4
-      // setLoading(true);
-      // setError("");
-      // try {
-      //   const menu = await fetchMenu();
-      //   if (!ignore) {
-      //     setItems(menu);
-      //   }
-      // } catch (err) {
-      //   if (!ignore) {
-      //     setError(err.message);
-      //   }
-      // } finally {
-      //   if (!ignore) {
-      //     setLoading(false);
-      //   }
-      // }
+      setLoading(true);
+      setError("");
+      try {
+        const menu = await fetchMenu();
+        if (!ignore) {
+          setItems(menu);
+        }
+      } catch (err) {
+        if (!ignore) {
+          setError(err.message);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
     }
 
     loadMenu();
