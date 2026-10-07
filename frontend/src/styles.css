@@ -1,0 +1,279 @@
+:root {
+  --bg: #f4efe6;
+  --text: #2b2926;
+  --muted: #5e594f;
+  --sage: #6f7f68;
+  --sage-dark: #556354;
+  --tan: #c4a574;
+  --card: #fffdf9;
+  --border: #e3d9cc;
+  --danger: #8c4a3a;
+  color: var(--text);
+  background: var(--bg);
+  font-family: "Iowan Old Style", Palatino, Georgia, serif;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--sage-dark);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+h1,
+h2,
+.page-title {
+  margin: 0;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.95rem;
+}
+
+nav a.active {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #fffdf9;
+}
+
+.lede,
+.status {
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.menu-grid,
+.admin-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card,
+.admin-row,
+.order-form,
+.order-result {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.card h2,
+.admin-row h2,
+.order-form h2 {
+  font-size: 1.35rem;
+}
+
+.price {
+  margin: 8px 0 0;
+  color: var(--sage-dark);
+  font-size: 1.15rem;
+}
+
+.sold-out {
+  display: inline-block;
+  margin: 12px 0 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f3e4d4;
+  color: var(--danger);
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.details {
+  margin: 16px 0 0;
+  color: var(--muted);
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+button {
+  border: 1px solid var(--sage);
+  background: var(--sage);
+  color: #fffdf9;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background: #d9d3c8;
+  border-color: #d9d3c8;
+  color: #6d675e;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+nav a:focus-visible {
+  outline: 2px solid var(--sage-dark);
+  outline-offset: 2px;
+}
+
+.order-form {
+  margin-top: 28px;
+  display: grid;
+  gap: 14px;
+}
+
+.order-form h2,
+.page-title {
+  margin-bottom: 4px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-size: 0.92rem;
+}
+
+input,
+select {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+}
+
+.banner {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.banner-success {
+  background: #e7eee4;
+  border-color: #c9d5c4;
+}
+
+.banner-error,
+.form-error {
+  color: var(--danger);
+}
+
+.form-error {
+  margin: 0;
+}
+
+.saved {
+  margin: 0;
+  color: var(--sage-dark);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.order-result {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.order-result div {
+  margin: 0;
+}
+
+.order-result dt {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.order-result dd {
+  margin: 4px 0 0;
+}
+
+.admin-list {
+  margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-result {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
