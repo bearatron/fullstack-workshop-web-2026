@@ -124,21 +124,23 @@ def admin_menu_item(request, item_id):
     if menu_item is None:
         return JsonResponse({"error": "menu item not found"}, status=404)
 
-    if "price" not in data:
-        return JsonResponse({"error": "price is required"}, status=400)
+    if "price" not in data and "available" not in data:
+        return JsonResponse({"error": "price or available is required"}, status=400)
 
-    try:
-        price = Decimal(str(data["price"]))
-    except (InvalidOperation, ValueError):
-        return JsonResponse({"error": "price must be a number"}, status=400)
+    if "price" in data:
+        try:
+            price = Decimal(str(data["price"]))
+        except (InvalidOperation, ValueError):
+            return JsonResponse({"error": "price must be a number"}, status=400)
+        if price < 0:
+            return JsonResponse({"error": "price must be a number"}, status=400)
+        menu_item.price = price
 
-    if price < 0:
-        return JsonResponse({"error": "price must be a number"}, status=400)
-
-    menu_item.price = price
-
-    # TODO-WORKSHOP-8
-    # Also accept {"available": false} and save it on the menu item.
+    if "available" in data:
+        available = data["available"]
+        if not isinstance(available, bool):
+            return JsonResponse({"error": "available must be true or false"}, status=400)
+        menu_item.available = available
 
     menu_item.save()
     return JsonResponse(menu_item_to_json(menu_item))
