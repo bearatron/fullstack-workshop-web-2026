@@ -16,14 +16,13 @@ export default function AdminMenuRow({ item, onSave }) {
     setSaved(false);
     setError("");
 
-    // TODO-WORKSHOP-6
-    // try {
-    //   const updated = await onSave(item.id, { price });
-    //   setPrice(updated.price);
-    //   setSaved(true);
-    // } catch (err) {
-    //   setError(err.message);
-    // }
+    try {
+      const updated = await onSave(item.id, { price });
+      setPrice(updated.price);
+      setSaved(true);
+    } catch (err) {
+      setError(err.message);
+    }
 
     // TODO-WORKSHOP-8
     // Add an Available checkbox and send it with the price:

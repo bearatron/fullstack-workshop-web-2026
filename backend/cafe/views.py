@@ -144,26 +144,30 @@ def admin_menu_item(request, item_id):
     if request.method != "PATCH":
         return JsonResponse({"error": "method not allowed"}, status=405)
 
-    # TODO-WORKSHOP-6
-    # if not has_admin_access(request):
-    #     return JsonResponse({"error": "admin access required"}, status=403)
-    # try:
-    #     data = json.loads(request.body or b"{}")
-    # except json.JSONDecodeError:
-    #     return JsonResponse({"error": "invalid JSON"}, status=400)
-    # menu_item = next((item for item in temporary_menu if item["id"] == item_id), None)
-    # if menu_item is None:
-    #     return JsonResponse({"error": "menu item not found"}, status=404)
-    # if "price" not in data:
-    #     return JsonResponse({"error": "price is required"}, status=400)
-    # try:
-    #     price = Decimal(str(data["price"]))
-    # except (InvalidOperation, ValueError):
-    #     return JsonResponse({"error": "price must be a number"}, status=400)
-    # if price < 0:
-    #     return JsonResponse({"error": "price must be a number"}, status=400)
-    # menu_item["price"] = f"{price:.2f}"
-    # return JsonResponse(menu_item)
+    if not has_admin_access(request):
+        return JsonResponse({"error": "admin access required"}, status=403)
+
+    try:
+        data = json.loads(request.body or b"{}")
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "invalid JSON"}, status=400)
+
+    menu_item = next((item for item in temporary_menu if item["id"] == item_id), None)
+    if menu_item is None:
+        return JsonResponse({"error": "menu item not found"}, status=404)
+
+    if "price" not in data:
+        return JsonResponse({"error": "price is required"}, status=400)
+
+    try:
+        price = Decimal(str(data["price"]))
+    except (InvalidOperation, ValueError):
+        return JsonResponse({"error": "price must be a number"}, status=400)
+
+    if price < 0:
+        return JsonResponse({"error": "price must be a number"}, status=400)
+
+    menu_item["price"] = f"{price:.2f}"
 
     # TODO-WORKSHOP-7
     # Save that price with the ORM instead of temporary_menu:
@@ -175,7 +179,4 @@ def admin_menu_item(request, item_id):
     # TODO-WORKSHOP-8
     # Also accept {"available": false} and save it on the menu item.
 
-    return JsonResponse(
-        {"error": "TODO-WORKSHOP-6 is not finished yet"},
-        status=501,
-    )
+    return JsonResponse(menu_item)
