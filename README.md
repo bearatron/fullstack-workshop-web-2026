@@ -53,7 +53,7 @@ npm install
 npm run dev
 ```
 
-## Mission 0 — Run Binary Brews
+## Mission 0: Run Binary Brews
 
 **Goal:** See that the website and the server are two separate programs.
 
@@ -78,7 +78,7 @@ Open both URLs in the browser.
 - An admin page with a price box and **Save** for each drink.
 - The Django terminal still running on its own.
 
-## Mission 1 — Make a React component interactive
+## Mission 1: Make a React component interactive
 
 **Goal:** Clicking a button shows and hides details on a menu card.
 
@@ -104,7 +104,7 @@ On http://localhost:5173/customer, click **View details** on Iced Matcha, then c
 
 The first click shows `Cold matcha with oat milk.` The button label changes to **Hide details**. The second click hides that line.
 
-## Mission 2 — Build the public menu endpoint
+## Mission 2: Build the public menu endpoint
 
 **Goal:** Django returns the menu as JSON.
 
@@ -166,13 +166,13 @@ Find:
 ]
 ```
 
-If you see this JSON in Postman, your first endpoint works. React is not involved yet — Postman is acting as the client.
+If you see this JSON in Postman, your first endpoint works. React is not involved yet. Postman is acting as the client.
 
 ### You should see
 
 Status `200 OK` and the four drinks above.
 
-## Mission 3 — Build the public order endpoint
+## Mission 3: Build the public order endpoint
 
 **Goal:** A POST request creates an order and sends it back.
 
@@ -272,7 +272,7 @@ Content-Type: application/json
 
 `201 Created` for PF, and `400 Bad Request` for the empty name.
 
-## Mission 4 — Connect React to Django
+## Mission 4: Connect React to Django
 
 **Goal:** The customer page shows the menu that Django returns.
 
@@ -301,7 +301,7 @@ Change one drink name in `temporary_menu` inside `backend/cafe/views.py`. Save, 
 
 The customer page shows the name you changed. Put the original name back when you are done.
 
-## Mission 5 — Place an order from React
+## Mission 5: Place an order from React
 
 **Goal:** The order form sends a real order to Django.
 
@@ -337,7 +337,7 @@ Order placed! Iced Matcha is now in the queue.
 
 Under the banner, the order id, drink, quantity, and status `pending`.
 
-## Mission 6 — Admin page: change a menu price
+## Mission 6: Admin page: change a menu price
 
 **Goal:** A protected request updates a price, and the customer page shows it.
 
@@ -435,7 +435,7 @@ Then open http://localhost:5173/admin, change a price, press **Save**, and refre
 
 Postman returns `403` without the key and `200` with it. After **Save**, the admin row says **Saved**. After you refresh the customer page, that drink shows the new price.
 
-## Mission 7 — Make Binary Brews persistent with SQLite
+## Mission 7: Make Binary Brews persistent with SQLite
 
 **Goal:** Orders and price changes are still there after Django restarts.
 
@@ -503,7 +503,7 @@ The order id may be higher than 1 if you already created orders. Find the object
 
 Alex's Latte order is still in the JSON after the restart.
 
-## Mission 8 — Final challenge: We're Out of Matcha
+## Mission 8: Final challenge: We're Out of Matcha
 
 **Goal:** The admin can mark Iced Matcha sold out, and customers cannot order it.
 
