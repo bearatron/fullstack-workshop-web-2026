@@ -3,8 +3,8 @@ import { itemDetails } from "../starterMenu";
 
 export default function MenuCard({ item, onAdd }) {
   // TODO-WORKSHOP-1
-  // const [showDetails, setShowDetails] = useState(false);
-  const showDetails = false;
+  const [showDetails, setShowDetails] = useState(false);
+  // const showDetails = false;
 
   return (
     <article className="card">
@@ -18,7 +18,7 @@ export default function MenuCard({ item, onAdd }) {
           type="button"
           onClick={() => {
             // TODO-WORKSHOP-1
-            // setShowDetails((current) => !current);
+            setShowDetails((current) => !current);
           }}
         >
           {showDetails ? "Hide details" : "View details"}
