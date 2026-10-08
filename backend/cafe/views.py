@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import MenuItem, Order
 
-# Temporary workshop storage. Task 7 replaces this with the database.
+# Temporary workshop storage. Mission 7 replaces this with the database.
 temporary_menu = [
     {"id": 1, "name": "Iced Matcha", "price": "6.00", "available": True},
     {"id": 2, "name": "Latte", "price": "5.00", "available": True},
