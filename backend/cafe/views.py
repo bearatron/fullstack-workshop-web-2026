@@ -60,17 +60,17 @@ def menu_list(request):
 
     # TODO-WORKSHOP-2
     # Return the temporary menu as JSON:
-    # return JsonResponse(temporary_menu, safe=False)
+    return JsonResponse(temporary_menu, safe=False)
 
     # TODO-WORKSHOP-7
     # Replace temporary_menu with the database:
     # items = [menu_item_to_json(item) for item in MenuItem.objects.all()]
     # return JsonResponse(items, safe=False)
 
-    return JsonResponse(
-        {"error": "TODO-WORKSHOP-2 is not finished yet"},
-        status=501,
-    )
+    # return JsonResponse(
+    #     {"error": "TODO-WORKSHOP-2 is not finished yet"},
+    #     status=501,
+    # )
 
 
 @csrf_exempt
