@@ -18,22 +18,22 @@ export default function CustomerPage() {
 
     async function loadMenu() {
       // TODO-WORKSHOP-4
-      // setLoading(true);
-      // setError("");
-      // try {
-      //   const menu = await fetchMenu();
-      //   if (!ignore) {
-      //     setItems(menu);
-      //   }
-      // } catch (err) {
-      //   if (!ignore) {
-      //     setError(err.message);
-      //   }
-      // } finally {
-      //   if (!ignore) {
-      //     setLoading(false);
-      //   }
-      // }
+      setLoading(true);
+      setError("");
+      try {
+        const menu = await fetchMenu();
+        if (!ignore) {
+          setItems(menu);
+        }
+      } catch (err) {
+        if (!ignore) {
+          setError(err.message);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
     }
 
     loadMenu();
@@ -49,7 +49,9 @@ export default function CustomerPage() {
 
   return (
     <div className="page">
-      <p className="lede">Order from the counter. The kitchen queue starts here.</p>
+      <p className="lede">
+        Order from the counter. The kitchen queue starts here.
+      </p>
       {loading ? <p className="status">Loading menu...</p> : null}
       {error ? <StatusBanner message={error} tone="error" /> : null}
       <MenuGrid items={items} onAdd={(item) => setSelectedId(item.id)} />
