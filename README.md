@@ -1,51 +1,46 @@
 # Binary Brews
 
-The café site is already built. You will make it actually work, one small change at a time.
+The café site is already built. Your job is to make it work, one small change at a time.
 
-Search the project for `TODO-WORKSHOP` when you want to see every exercise.
+There are 9 missions (0 through 8). Search the project for `TODO-WORKSHOP` to find every spot you need to edit.
 
 Frontend: http://localhost:5173
-
 Backend: http://localhost:8000
 
+## Contents
+
+- [Setup](#setup)
+- [Mission 0: Run Binary Brews](#mission-0-run-binary-brews)
+- [Mission 1: Make a card interactive](#mission-1-make-a-card-interactive)
+- [Mission 2: Build the menu endpoint](#mission-2-build-the-menu-endpoint)
+- [Mission 3: Build the order endpoint](#mission-3-build-the-order-endpoint)
+- [Mission 4: Connect React to Django](#mission-4-connect-react-to-django)
+- [Mission 5: Place an order from React](#mission-5-place-an-order-from-react)
+- [Mission 6: Change a price from the admin page](#mission-6-change-a-price-from-the-admin-page)
+- [Mission 7: Save data in SQLite](#mission-7-save-data-in-sqlite)
+- [Mission 8: Mark a drink sold out](#mission-8-mark-a-drink-sold-out)
+- [If you fall behind](#if-you-fall-behind)
+
 ## Setup
+
+You need two terminals: one for the backend, one for the frontend.
 
 ### Backend
 
 ```bash
 cd backend
 python -m venv .venv
-```
-
-macOS/Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-Then:
-
-```bash
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
 
-`migrate` loads the four starter drinks. To put those drinks back to their original prices and availability later:
-
-```bash
-python manage.py seed_binary_brews
-```
+`migrate` loads the four starter drinks. To reset those drinks to their original prices and availability later, run `python manage.py seed_binary_brews`.
 
 ### Frontend
 
-In another terminal:
+In the other terminal:
 
 ```bash
 cd frontend
@@ -57,265 +52,97 @@ npm run dev
 
 **Goal:** See that the website and the server are two separate programs.
 
-### Open
+Start the backend and frontend using the steps above, then open http://localhost:5173/customer and http://localhost:5173/admin.
 
-Leave the Django terminal running. In a second terminal, start the frontend.
+You should see the customer page with Iced Matcha, Latte, Americano, and Chai Latte, and an admin page with a price box and a Save button for each drink. View details and Place Order do not do anything yet. The Django terminal keeps running on its own.
 
-### Do
+## Mission 1: Make a card interactive
 
-1. Run the backend commands above.
-2. Run the frontend commands above.
-3. Open http://localhost:5173/customer and http://localhost:5173/admin.
+**Goal:** Clicking a button shows and hides the details on a menu card.
 
-### Test
-
-Open both URLs in the browser.
-
-### You should see
-
-- A styled Binary Brews customer page with Iced Matcha, Latte, Americano, and Chai Latte.
-- **View details** and **Place Order** do not finish anything yet.
-- An admin page with a price box and **Save** for each drink.
-- The Django terminal still running on its own.
-
-## Mission 1: Make a React component interactive
-
-**Goal:** Clicking a button shows and hides details on a menu card.
-
-### Open
-
-`frontend/src/components/MenuCard.jsx`
-
-Find:
-
-`TODO-WORKSHOP-1`
-
-### Do
+**File:** `frontend/src/components/MenuCard.jsx` (find `TODO-WORKSHOP-1`)
 
 1. Replace `const showDetails = false` with `const [showDetails, setShowDetails] = useState(false)`.
-2. Inside the **View details** button, set `onClick` to `() => setShowDetails((current) => !current)`.
-3. Save the file. The page reloads on its own.
+2. On the View details button, set `onClick` to `() => setShowDetails((current) => !current)`.
+3. Save. The page reloads on its own.
 
-### Test
+**Check:** On the customer page, click View details on Iced Matcha. You should see `Cold matcha with oat milk.` and the button should change to Hide details. Click again to hide it.
 
-On http://localhost:5173/customer, click **View details** on Iced Matcha, then click it again.
-
-### You should see
-
-The first click shows `Cold matcha with oat milk.` The button label changes to **Hide details**. The second click hides that line.
-
-## Mission 2: Build the public menu endpoint
+## Mission 2: Build the menu endpoint
 
 **Goal:** Django returns the menu as JSON.
 
-### Open
-
-`backend/cafe/views.py`
-
-Find:
-
-`TODO-WORKSHOP-2`
-
-### Do
+**File:** `backend/cafe/views.py` (find `TODO-WORKSHOP-2`)
 
 1. In `menu_list`, return `temporary_menu` with `JsonResponse`.
 2. Pass `safe=False`, because the response is a list.
-3. Remove the `501` response in that function so your return can run.
-4. Save the file and let Django reload.
+3. Remove the `501` response so your return can run.
 
-### Test
-
-**Method:** GET
-
-**URL:** `http://localhost:8000/api/menu/`
-
-**Headers:** none
-
-**Body:** none
-
-**Expected status:** `200 OK`
-
-**Expected JSON:**
+**Check:** Send a GET to `http://localhost:8000/api/menu/`. You should get `200 OK` and the four drinks:
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Iced Matcha",
-    "price": "6.00",
-    "available": true
-  },
-  {
-    "id": 2,
-    "name": "Latte",
-    "price": "5.00",
-    "available": true
-  },
-  {
-    "id": 3,
-    "name": "Americano",
-    "price": "4.00",
-    "available": true
-  },
-  {
-    "id": 4,
-    "name": "Chai Latte",
-    "price": "5.50",
-    "available": true
-  }
+  { "id": 1, "name": "Iced Matcha", "price": "6.00", "available": true },
+  { "id": 2, "name": "Latte", "price": "5.00", "available": true },
+  { "id": 3, "name": "Americano", "price": "4.00", "available": true },
+  { "id": 4, "name": "Chai Latte", "price": "5.50", "available": true }
 ]
 ```
 
-If you see this JSON in Postman, your first endpoint works. React is not involved yet. Postman is acting as the client.
+React is not involved yet. Postman is acting as the client.
 
-### You should see
-
-Status `200 OK` and the four drinks above.
-
-## Mission 3: Build the public order endpoint
+## Mission 3: Build the order endpoint
 
 **Goal:** A POST request creates an order and sends it back.
 
-### Open
+**File:** `backend/cafe/views.py` (find `TODO-WORKSHOP-3`)
 
-`backend/cafe/views.py`
+The function already reads the JSON body and rejects an empty `customer_name`.
 
-Find:
+1. Find the matching drink in `temporary_menu`.
+2. If there is no match, return `400` with `{"error": "menu item not found"}`.
+3. Call `reject_if_unavailable`. It is already written.
+4. Build an order dictionary, append it to `temporary_orders`, and return it with status `201`.
+5. Remove the `501` response at the bottom of `create_order`.
 
-`TODO-WORKSHOP-3`
-
-### Do
-
-1. The function already reads JSON and rejects an empty `customer_name`.
-2. Find the matching drink in `temporary_menu`.
-3. If there is no match, return `400` and `{"error": "menu item not found"}`.
-4. Call `reject_if_unavailable`. It is already written.
-5. Build an order dictionary, append it to `temporary_orders`, and return it with status `201`.
-6. Remove the `501` response at the bottom of `create_order`.
-
-### Test
-
-Success request.
-
-**Method:** POST
-
-**URL:** `http://localhost:8000/api/orders/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-```
-
-**Body:**
+**Check:** Send a POST to `http://localhost:8000/api/orders/` with header `Content-Type: application/json` and this body:
 
 ```json
-{
-  "customer_name": "PF",
-  "menu_item_id": 1,
-  "quantity": 1
-}
+{ "customer_name": "PF", "menu_item_id": 1, "quantity": 1 }
 ```
 
-**Expected status:** `201 Created`
-
-**Expected JSON** when this is the first order:
+You should get `201 Created`. The first order looks like this:
 
 ```json
 {
   "id": 1,
   "customer_name": "PF",
-  "menu_item": {
-    "id": 1,
-    "name": "Iced Matcha",
-    "price": "6.00",
-    "available": true
-  },
+  "menu_item": { "id": 1, "name": "Iced Matcha", "price": "6.00", "available": true },
   "quantity": 1,
   "status": "pending"
 }
 ```
 
-Invalid request.
-
-**Method:** POST
-
-**URL:** `http://localhost:8000/api/orders/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "customer_name": "",
-  "menu_item_id": 1,
-  "quantity": 1
-}
-```
-
-**Expected status:** `400 Bad Request`
-
-**Expected JSON:**
-
-```json
-{
-  "error": "customer_name is required"
-}
-```
-
-### You should see
-
-`201 Created` for PF, and `400 Bad Request` for the empty name.
+Send the same request with `"customer_name": ""` and you should get `400 Bad Request` with `{"error": "customer_name is required"}`.
 
 ## Mission 4: Connect React to Django
 
 **Goal:** The customer page shows the menu that Django returns.
 
-### Open
+**Files:** `frontend/src/api/menu.js` and `frontend/src/pages/CustomerPage.jsx` (find `TODO-WORKSHOP-4`)
 
-`frontend/src/api/menu.js`
-
-`frontend/src/pages/CustomerPage.jsx`
-
-Find:
-
-`TODO-WORKSHOP-4`
-
-### Do
-
-1. In `fetchMenu`, `fetch("/api/menu/")`.
+1. In `fetchMenu`, call `fetch("/api/menu/")`.
 2. If the response is not ok, throw an error. Otherwise return the parsed JSON.
 3. In `CustomerPage`, call `fetchMenu` inside the existing `loadMenu` function and store the result with `setItems`.
 4. Use the loading and error lines that are already in the comment.
 
-### Test
-
-Change one drink name in `temporary_menu` inside `backend/cafe/views.py`. Save, then refresh http://localhost:5173/customer.
-
-### You should see
-
-The customer page shows the name you changed. Put the original name back when you are done.
+**Check:** Change one drink name in `temporary_menu` in `backend/cafe/views.py`, save, and refresh the customer page. You should see the new name. Put the original name back when you are done.
 
 ## Mission 5: Place an order from React
 
 **Goal:** The order form sends a real order to Django.
 
-### Open
-
-`frontend/src/api/orders.js`
-
-`frontend/src/components/OrderForm.jsx`
-
-Find:
-
-`TODO-WORKSHOP-5`
-
-### Do
+**Files:** `frontend/src/api/orders.js` and `frontend/src/components/OrderForm.jsx` (find `TODO-WORKSHOP-5`)
 
 1. In `createOrder`, POST the order object to `/api/orders/` with `Content-Type: application/json`.
 2. If the response is not ok, throw `new Error` with the server's `error` string.
@@ -323,292 +150,67 @@ Find:
 4. In `handleSubmit`, call `createOrder`, then call `onOrdered(order)` and clear the name field.
 5. Keep the `try/catch` that is already commented in the form.
 
-### Test
+**Check:** On the customer page, enter your name, choose Iced Matcha, leave the quantity at 1, and press Place Order. You should see a green banner that says `Order placed! Iced Matcha is now in the queue.` with the order id, drink, quantity, and status `pending` below it.
 
-On the customer page, enter your name, choose Iced Matcha, leave quantity at 1, and press **Place Order**.
-
-### You should see
-
-A green banner:
-
-```text
-Order placed! Iced Matcha is now in the queue.
-```
-
-Under the banner, the order id, drink, quantity, and status `pending`.
-
-## Mission 6: Admin page: change a menu price
+## Mission 6: Change a price from the admin page
 
 **Goal:** A protected request updates a price, and the customer page shows it.
 
 `X-ADMIN-KEY` is a workshop demo, not real authentication.
 
-### Open
+**Files:** `backend/cafe/views.py` and `frontend/src/components/AdminMenuRow.jsx` (find `TODO-WORKSHOP-6`)
 
-`backend/cafe/views.py`
-
-`frontend/src/components/AdminMenuRow.jsx`
-
-Find:
-
-`TODO-WORKSHOP-6`
-
-### Do
-
-1. In `admin_menu_item`, reject the request with `403` when `has_admin_access(request)` is false.
+1. In `admin_menu_item`, return `403` when `has_admin_access(request)` is false.
 2. Read the JSON body and update that drink's `price` in `temporary_menu`.
 3. Return the updated drink as JSON with status `200`.
-4. Remove the `501` response in that function.
+4. Remove the `501` response.
 5. In `AdminMenuRow`, call `onSave(item.id, { price })` from the save handler that is already commented in.
 
-### Test
+**Check:** Send a PATCH to `http://localhost:8000/api/admin/menu/1/` with body `{ "price": "6.50" }`.
 
-Unauthorized request.
+- Without the `X-ADMIN-KEY` header you should get `403 Forbidden` and `{"error": "admin access required"}`.
+- With header `X-ADMIN-KEY: binary-brews-demo` you should get `200 OK` and the updated drink.
 
-**Method:** PATCH
+Then open the admin page, change a price, press Save, and refresh the customer page. The row should say Saved, and the customer page should show the new price.
 
-**URL:** `http://localhost:8000/api/admin/menu/1/`
+## Mission 7: Save data in SQLite
 
-**Headers:**
+**Goal:** Orders and price changes survive a Django restart.
 
-```text
-Content-Type: application/json
-```
+**Files:** `backend/cafe/models.py` and `backend/cafe/views.py` (find `TODO-WORKSHOP-7`)
 
-Do not send `X-ADMIN-KEY`.
+The `MenuItem` and `Order` tables already exist.
 
-**Body:**
+1. In `menu_list`, return `MenuItem.objects.all()` through `menu_item_to_json` instead of `temporary_menu`.
+2. In the GET half of `order_collection`, return `Order.objects` through `order_to_json` instead of `temporary_orders`.
+3. In `create_order`, load the `MenuItem` and call `Order.objects.create(...)`.
+4. In `admin_menu_item`, save the new price on the `MenuItem` and return `menu_item_to_json(menu_item)`.
 
-```json
-{
-  "price": "6.50"
-}
-```
-
-**Expected status:** `403 Forbidden`
-
-**Expected JSON:**
+**Check:** POST an order for Alex:
 
 ```json
-{
-  "error": "admin access required"
-}
+{ "customer_name": "Alex", "menu_item_id": 2, "quantity": 1 }
 ```
 
-Authorized request.
+You should get `201 Created`. Stop Django with Ctrl+C, run `python manage.py runserver` again, then GET `http://localhost:8000/api/orders/`. Alex's Latte order should still be in the list.
 
-**Method:** PATCH
-
-**URL:** `http://localhost:8000/api/admin/menu/1/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-X-ADMIN-KEY: binary-brews-demo
-```
-
-**Body:**
-
-```json
-{
-  "price": "6.50"
-}
-```
-
-**Expected status:** `200 OK`
-
-**Expected JSON:**
-
-```json
-{
-  "id": 1,
-  "name": "Iced Matcha",
-  "price": "6.50",
-  "available": true
-}
-```
-
-Then open http://localhost:5173/admin, change a price, press **Save**, and refresh the customer page.
-
-### You should see
-
-Postman returns `403` without the key and `200` with it. After **Save**, the admin row says **Saved**. After you refresh the customer page, that drink shows the new price.
-
-## Mission 7: Make Binary Brews persistent with SQLite
-
-**Goal:** Orders and price changes are still there after Django restarts.
-
-### Open
-
-`backend/cafe/models.py`
-
-`backend/cafe/views.py`
-
-Find:
-
-`TODO-WORKSHOP-7`
-
-### Do
-
-1. Look at `MenuItem` and `Order` in `models.py`. The tables already exist.
-2. In `menu_list`, return `MenuItem.objects.all()` through `menu_item_to_json` instead of `temporary_menu`.
-3. In the GET half of `order_collection`, return `Order.objects` through `order_to_json` instead of `temporary_orders`.
-4. In `create_order`, load the `MenuItem` and call `Order.objects.create(...)`.
-5. In `admin_menu_item`, save the new price on the `MenuItem` and return `menu_item_to_json(menu_item)`.
-
-### Test
-
-**Method:** POST
-
-**URL:** `http://localhost:8000/api/orders/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "customer_name": "Alex",
-  "menu_item_id": 2,
-  "quantity": 1
-}
-```
-
-**Expected status:** `201 Created`
-
-Stop Django with Ctrl+C, then start it again:
-
-```bash
-python manage.py runserver
-```
-
-**Method:** GET
-
-**URL:** `http://localhost:8000/api/orders/`
-
-**Headers:** none
-
-**Body:** none
-
-**Expected status:** `200 OK`
-
-The order id may be higher than 1 if you already created orders. Find the object whose `customer_name` is `Alex`, whose drink is Latte, and whose `quantity` is `1`.
-
-### You should see
-
-Alex's Latte order is still in the JSON after the restart.
-
-## Mission 8: Final challenge: We're Out of Matcha
+## Mission 8: Mark a drink sold out
 
 **Goal:** The admin can mark Iced Matcha sold out, and customers cannot order it.
 
-### Open
-
-`backend/cafe/views.py`
-
-`frontend/src/components/AdminMenuRow.jsx`
-
-`frontend/src/components/MenuCard.jsx`
-
-Find:
-
-`TODO-WORKSHOP-8`
-
-### Do
+**Files:** `backend/cafe/views.py`, `frontend/src/components/AdminMenuRow.jsx`, and `frontend/src/components/MenuCard.jsx` (find `TODO-WORKSHOP-8`)
 
 1. Teach `PATCH /api/admin/menu/<id>/` to accept `available` and save it on the `MenuItem`.
-2. On the admin row, add an **Available** checkbox and send `available` in the same save request as `price`.
-3. On the menu card, when `item.available === false`, show `SOLD OUT` and disable **Add to Order**.
+2. On the admin row, add an Available checkbox and send `available` in the same save request as `price`.
+3. On the menu card, when `item.available === false`, show `SOLD OUT` and disable Add to Order.
 
-### Test
+**Check:** PATCH `http://localhost:8000/api/admin/menu/1/` with header `X-ADMIN-KEY: binary-brews-demo` and body `{ "available": false }`. You should get `200 OK` and `"available": false` in the response.
 
-**Method:** PATCH
-
-**URL:** `http://localhost:8000/api/admin/menu/1/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-X-ADMIN-KEY: binary-brews-demo
-```
-
-**Body:**
-
-```json
-{
-  "available": false
-}
-```
-
-**Expected status:** `200 OK`
-
-**Expected JSON:**
-
-```json
-{
-  "id": 1,
-  "name": "Iced Matcha",
-  "price": "6.50",
-  "available": false
-}
-```
-
-If you did not change the price in Mission 6, `price` will still be `"6.00"`. That is fine.
-
-Then try to order it anyway.
-
-**Method:** POST
-
-**URL:** `http://localhost:8000/api/orders/`
-
-**Headers:**
-
-```text
-Content-Type: application/json
-```
-
-**Body:**
-
-```json
-{
-  "customer_name": "PF",
-  "menu_item_id": 1,
-  "quantity": 1
-}
-```
-
-**Expected status:** `400 Bad Request`
-
-**Expected JSON:**
-
-```json
-{
-  "error": "menu item is unavailable"
-}
-```
-
-Refresh http://localhost:5173/customer.
-
-### You should see
-
-```text
-Iced Matcha
-$6.50
-SOLD OUT
-[ Add to Order ]  ← disabled
-```
-
-The price line follows whatever price is saved. **Place Order** cannot submit Iced Matcha, and Postman still gets `400` if you try.
+Then POST an order for that drink and you should get `400 Bad Request` with `{"error": "menu item is unavailable"}`. Refresh the customer page and Iced Matcha should show SOLD OUT with Add to Order disabled. The price line follows whatever price is saved.
 
 ## If you fall behind
 
-Checkpoint branches already contain the finished missions. If Git refuses to switch, ask the instructor before you discard your work.
+Checkpoint branches already contain the finished missions. If Git refuses to switch because of local edits, ask the instructor before you discard your work.
 
 ```bash
 git switch step-4-react-connected
