@@ -1,4 +1,4 @@
-"""Instructor demo only. The workshop views do not import this file.
+"""Optional cache example. The café views do not use this file.
 
 Call get_cached_menu() twice from a Django shell. The first call prints
 CACHE MISS. A second call within a few seconds prints CACHE HIT.
